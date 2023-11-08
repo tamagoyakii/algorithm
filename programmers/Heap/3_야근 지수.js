@@ -65,6 +65,7 @@ class MaxHeap {
     return max;
   }
 }
+
 function solution(n, works) {
   const maxHeap = new MaxHeap();
 
