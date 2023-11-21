@@ -20,6 +20,7 @@ function solution(gems) {
 }
 // 효율성 테스트 15번 실패
 
+// 슬라이딩 윈도우 + 해시맵
 function solution(gems) {
   const gemCount = new Map();
   const types = [...new Set(gems)];
