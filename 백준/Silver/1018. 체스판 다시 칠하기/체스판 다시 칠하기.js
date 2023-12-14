@@ -12,32 +12,21 @@ readline
   .on('close', function () {
     const [N, M] = input[0].split(' ');
     let min = N * M;
-    const repaintBlack = (y, x, line) => {
+    const repaint = (y, x, line, color) => {
       if (line === 8) return 0;
       let cnt = 0;
       for (let i = x; i < x + 8; i++) {
-        if (i % 2 === 0 && input[y + line][i] === 'B') continue;
-        if (i % 2 === 1 && input[y + line][i] === 'W') continue;
+        if (i % 2 === 0 && input[y + line][i] === color) continue;
+        if (i % 2 === 1 && input[y + line][i] !== color) continue;
         cnt++;
       }
-      return cnt + repaintWhite(y, x, ++line);
-    };
-
-    const repaintWhite = (y, x, line) => {
-      if (line === 8) return 0;
-      let cnt = 0;
-      for (let i = x; i < x + 8; i++) {
-        if (i % 2 === 0 && input[y + line][i] === 'W') continue;
-        if (i % 2 === 1 && input[y + line][i] === 'B') continue;
-        cnt++;
-      }
-      return cnt + repaintBlack(y, x, ++line);
+      return cnt + repaint(y, x, ++line, color === 'B' ? 'W' : 'B');
     };
 
     for (let i = 1; i + 6 < N; i++) {
       for (let j = 0; j + 7 < M; j++) {
-        const black = repaintBlack(i, j, 0);
-        const white = repaintWhite(i, j, 0);
+        const black = repaint(i, j, 0, 'B');
+        const white = repaint(i, j, 0, 'W');
         min = Math.min(min, black, white);
       }
     }
