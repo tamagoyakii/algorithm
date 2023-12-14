@@ -6,9 +6,8 @@ input.forEach((num) => {
   for (let j = 1; j < num.length / 2; j++) {
     if (num.at(j) !== num.at(-j)) {
       console.log('no');
-      num = null;
-      break;
+      return;
     }
   }
-  if (num) console.log('yes');
+  console.log('yes');
 });
