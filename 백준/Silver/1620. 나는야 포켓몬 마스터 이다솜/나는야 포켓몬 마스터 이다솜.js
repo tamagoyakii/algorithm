@@ -1,15 +1,14 @@
 const input = require('fs').readFileSync('/dev/stdin').toString().split('\n');
 const [N, M] = input[0].split(' ').map(Number);
-const pokemons = input.slice(0, N + 1);
 const problems = input.slice(N + 1, N + M + 1);
 const pokedex = new Map();
 
-pokemons.forEach((pokemon, i) => pokedex.set(pokemon, i));
+for (let i = 1; i <= N; i++) pokedex.set(input[i], i);
 
 const solution = problems
-  .map((e) => {
-    const index = Number(e);
-    return isNaN(index) ? pokedex.get(e) : pokemons[index];
+  .map((p) => {
+    const i = Number(p);
+    return isNaN(i) ? pokedex.get(p) : input[i];
   })
   .join('\n');
 
