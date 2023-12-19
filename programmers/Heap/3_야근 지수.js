@@ -36,7 +36,7 @@ class MaxHeap {
       parIdx = this.getParentIdx(curIdx);
     }
   }
-  unShift() {
+  shift() {
     const max = this.heap[1];
     if (this.heap.length <= 2) this.heap = [null];
     else this.heap[1] = this.heap.pop();
@@ -71,7 +71,7 @@ function solution(n, works) {
 
   works.forEach((el) => maxHeap.push(el));
   for (let i = n; i > 0; i--) {
-    const maxWork = maxHeap.unShift();
+    const maxWork = maxHeap.shift();
     if (maxWork === 0) break;
     maxHeap.push(maxWork - 1);
   }
