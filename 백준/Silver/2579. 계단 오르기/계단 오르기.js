@@ -1,17 +1,21 @@
-const input = require('fs').readFileSync('/dev/stdin').toString().split('\n');
-const N = Number(input[0]);
-const stairs = input.slice(1, N + 1).map(Number);
+const input = require('fs')
+  .readFileSync('/dev/stdin')
+  .toString()
+  .trim()
+  .split('\n')
+  .map(Number);
 
-console.log(solution(N, stairs));
+console.log(solution());
 
-function solution(N, stairs) {
-  const dp = Array.from({ length: N + 1 }, () => Array(2).fill(0));
+function solution() {
+  const [N, ...stairs] = input;
+  const dp = Array(N + 1).fill(0);
 
   stairs.unshift(0);
-  dp[1].fill(stairs[1]);
-  for (let i = 2; i < stairs.length; i++) {
-    dp[i][0] = stairs[i] + dp[i - 1][1];
-    dp[i][1] = stairs[i] + Math.max(dp[i - 2][0], dp[i - 2][1]);
+  dp[1] = stairs[1];
+  dp[2] = stairs[1] + stairs[2];
+  for (let i = 3; i <= N; i++) {
+    dp[i] = stairs[i] + Math.max(stairs[i - 1] + dp[i - 3], dp[i - 2]);
   }
-  return Math.max(...dp[N]);
+  return dp[N];
 }
