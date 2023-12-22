@@ -17,18 +17,15 @@ function solution() {
     computers[b].push(a);
   }
 
-  let cnt = 0;
   const visited = Array(N + 1).fill(false);
+  let cnt = 0;
 
-  const dfs = (from) => {
+  const infectComputers = (from) => {
+    cnt++;
     visited[from] = true;
-    computers[from].forEach((to) => {
-      if (visited[to]) return;
-      cnt++;
-      dfs(to);
-    });
+    computers[from].forEach((to) => !visited[to] && infectComputers(to));
   };
 
-  dfs(1);
-  return cnt;
+  infectComputers(1);
+  return cnt - 1;
 }
