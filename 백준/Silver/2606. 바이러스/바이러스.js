@@ -9,26 +9,22 @@ console.log(solution());
 function solution() {
   const N = Number(input[0]);
   const M = Number(input[1]);
-  const computers = Array.from({ length: N + 1 }, () =>
-    Array(N + 1).fill(false)
-  );
+  const computers = Array.from({ length: N + 1 }, () => []);
 
   for (let i = 2; i <= 1 + M; i++) {
     const [a, b] = input[i].split(' ').map(Number);
-    computers[a][b] = true;
-    computers[b][a] = true;
+    computers[a].push(b);
+    computers[b].push(a);
   }
 
   let cnt = 0;
-  const visited = new Set();
+  const visited = Array(N + 1).fill(false);
 
   const dfs = (from) => {
-    visited.add(from);
-    computers[from].forEach((isConnected, to) => {
-      if (!isConnected || visited.has(to)) return;
+    visited[from] = true;
+    computers[from].forEach((to) => {
+      if (visited[to]) return;
       cnt++;
-      computers[from][to] = false;
-      computers[to][from] = false;
       dfs(to);
     });
   };
