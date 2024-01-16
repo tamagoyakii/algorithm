@@ -7,17 +7,13 @@ const input = require('fs')
 console.log(solution());
 
 function solution() {
-  const T = Number(input[0]);
-  const res = [];
+  const numbers = input.slice(1).map(Number);
+  const dp = [0, 1, 2, 4];
+  const max = Math.max(...numbers);
 
-  const dfs = (n, target) => {
-    if (n === target) return 1;
-    if (n > target) return 0;
-    return dfs(n + 1, target) + dfs(n + 2, target) + dfs(n + 3, target);
-  };
-
-  for (let i = 1; i <= T; i++) {
-    res.push(dfs(0, Number(input[i])));
+  for (let i = 4; i <= max; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
   }
-  return res.join('\n');
+
+  return numbers.map((N) => dp[N]).join('\n');
 }
