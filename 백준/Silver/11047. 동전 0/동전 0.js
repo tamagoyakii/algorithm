@@ -1,15 +1,14 @@
 function solution(input) {
-  const [_, K] = input[0].split(' ').map(Number);
-  const coins = input.slice(1).map(Number).reverse();
+  const [N, K] = input.shift().split(' ').map(Number);
+  const coins = input.map(Number).reverse();
+  let cnt = 0;
 
-  return coins.reduce(
-    ([cnt, value], cur) => {
-      const quotient = Math.floor(value / cur);
-      const remainder = value % cur;
-      return [cnt + quotient, remainder];
-    },
-    [0, K]
-  )[0];
+  for (let i = 0, val = K; i < N && val !== 0; i++) {
+    cnt += Math.floor(val / coins[i]);
+    val %= coins[i];
+  }
+
+  return cnt;
 }
 
 const input = require('fs')
