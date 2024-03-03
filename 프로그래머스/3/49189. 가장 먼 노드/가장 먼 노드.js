@@ -17,7 +17,6 @@ function solution(n, edge) {
       node.get(currentNode).forEach((nextNode) => newQueue.push(nextNode));
       node.delete(currentNode);
     });
-
     queue = newQueue;
     if (node.size) ans = node.size;
   }
